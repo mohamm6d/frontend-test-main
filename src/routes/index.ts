@@ -8,21 +8,31 @@ const routes = [
     children: [
       {
         path: '/list-pending',
+        name: 'ListPending',
         component: () => import('./PageListPendingItems.vue'),
       },
       {
         path: '/list-done',
+        name: 'ListDone',
         component: () => import('./PageListDoneItems.vue'),
       },
       {
         path: '/create',
-        // TODO: Create page to make new items
-        component: () => import('./PageCreateItem.vue'),
+        name: 'Create',
+        component: () => import('./PageFormItem.vue'),
+        props: (route) => ({
+          action: 'create',
+        }),
       },
       {
         path: '/edit/:id',
-        // TODO: Create page to edit items
-        // component: () => import('./*.vue')
+        name: 'Edit',
+        component: () => import('./PageFormItem.vue'),
+        props: (route) => ({
+          action: 'edit',
+          id: route.params.id,
+        }),
+
       },
     ],
   },

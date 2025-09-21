@@ -3,6 +3,9 @@ import { computed, defineComponent } from 'vue';
 import { ListItemState } from '@/types';
 import { BaseButton } from '@/components/BaseButton';
 import { useTodoListStore } from '@/stores/useTodoListStore';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const { list } = useTodoListStore();
 
@@ -14,6 +17,7 @@ const props = withDefaults(
   defineProps<{
     description: string;
     state?: ListItemState;
+    id: string;
   }>(),
   {
     state: 'pending',
@@ -32,11 +36,15 @@ const editItem = () => {
 };
 
 const removeItem = () => {
-  list.splice(list.indexOf(props.id), 1);
+  list.splice(
+    list.findIndex((item) => item.id === props.id),
+    1
+  );
 };
 
-const completeItem = () => {
-  props.state = 'done';
+const toggleItemState = (id: string) => {
+  list.find((item) => item.id === id).state =
+    list.find((item) => item.id === id).state === 'done' ? 'pending' : 'done';
 };
 </script>
 
@@ -48,7 +56,10 @@ const completeItem = () => {
     ]"
     :aria-checked="state === 'done'"
   >
-    <base-button @click="completeItem" :disabled="state === 'done'" >Complete</base-button>
+    <base-button
+      @click="toggleItemState(id)"
+      v-text="state === 'done' ? 'Pending' : 'Done'"
+    ></base-button>
     <div class="w-full">
       {{ description }}
     </div>

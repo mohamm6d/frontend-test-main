@@ -1,27 +1,50 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { BaseCard } from '@/components/BaseCard';
 import { BaseButton } from '@/components/BaseButton';
 import { useTodoListStore } from '@/stores/useTodoListStore';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-
 const { list } = useTodoListStore();
 
 const form = ref({
   name: '',
-  category: '',
+  category: 'Health',
 });
 
-const onSubmit = (e: Event) => {
-  e.preventDefault();
-  list.push({
-    id: Date.now().toString(),
-    name: form.value.name,
-    category: form.value.category,
-    state: 'pending',
-  });
+const props = defineProps<{
+  action: 'create' | 'edit';
+  id?: string;
+}>();
+
+onMounted(() => {
+  if (props.action === 'edit') {
+    form.value.name = list.find((item) => item.id === props.id).name;
+    form.value.category = list.find((item) => item.id === props.id).category;
+  }
+});
+
+const onSubmit = (action: 'create' | 'edit') => {
+  if (form.value.name.trim() === '') {
+    alert('Name is required');
+    return;
+  }
+  if (form.value.category.trim() === '') {
+    alert('Category is required');
+    return;
+  }
+  if (action === 'create') {
+    list.push({
+      id: Date.now().toString(),
+      name: form.value.name,
+      category: form.value.category,
+      state: 'pending',
+    });
+  } else {
+    list.find((item) => item.id === props.id).name = form.value.name;
+    list.find((item) => item.id === props.id).category = form.value.category;
+  }
   form.value.name = '';
   form.value.category = '';
 
@@ -31,7 +54,7 @@ const onSubmit = (e: Event) => {
 
 <template>
   <base-card class="col-start-5 col-span-4 row-start-2 row-span-10">
-    <form class="flex flex-col gap-4" @submit="onSubmit">
+    <form class="flex flex-col gap-4" @submit.prevent="onSubmit(action)">
       <div class="flex flex-col">
         <label for="todo-name"> Name </label>
         <input
@@ -52,7 +75,7 @@ const onSubmit = (e: Event) => {
           <option value="Personal">Personal</option>
         </select>
       </div>
-      <BaseButton @click="onSubmit" type="submit"> Submit </BaseButton>
+      <BaseButton type="submit"> Submit </BaseButton>
     </form>
   </base-card>
 </template>
