@@ -4,4 +4,5 @@ export interface ListItem {
   id: string;
   description: string;
   state: ListItemState;
+  category: string;
 }

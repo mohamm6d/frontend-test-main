@@ -9,7 +9,7 @@ const doneList = computed(() => {
   return list.filter((item) => item.state === 'done');
 });
 const hasItems = computed(() => {
-  return !!list.length;
+  return !!doneList.value.length;
 });
 </script>
 
@@ -20,7 +20,7 @@ const hasItems = computed(() => {
       <list-item
         v-for="item in doneList"
         :key="item.id"
-        :description="item.name"
+        :description="item.description"
         :state="item.state"
         :id="item.id"
       />

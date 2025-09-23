@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, defineComponent } from 'vue';
-import { ListItemState } from '@/types';
+import { ListItem, ListItemState } from '@/types';
 import { BaseButton } from '@/components/BaseButton';
 import { useTodoListStore } from '@/stores/useTodoListStore';
 import { useRouter } from 'vue-router';
@@ -14,11 +14,7 @@ defineComponent({
 });
 
 const props = withDefaults(
-  defineProps<{
-    description: string;
-    state?: ListItemState;
-    id: string;
-  }>(),
+  defineProps<ListItem>(),
   {
     state: 'pending',
   }
@@ -62,6 +58,7 @@ const toggleItemState = (id: string) => {
     ></base-button>
     <div class="w-full">
       {{ description }}
+      {{ category }}
     </div>
     <base-button @click="editItem">Edit</base-button>
     <base-button @click="removeItem">Remove</base-button>

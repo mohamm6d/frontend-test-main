@@ -9,7 +9,7 @@ const router = useRouter();
 const { list } = useTodoListStore();
 
 const form = ref({
-  name: '',
+  description: '',
   category: 'Health',
 });
 
@@ -20,13 +20,13 @@ const props = defineProps<{
 
 onMounted(() => {
   if (props.action === 'edit') {
-    form.value.name = list.find((item) => item.id === props.id).name;
-    form.value.category = list.find((item) => item.id === props.id).category;
+    form.value.description = list.find((item) => item.id === props.id)?.description || '';
+    form.value.category = list.find((item) => item.id === props.id)?.category || '';
   }
 });
 
 const onSubmit = (action: 'create' | 'edit') => {
-  if (form.value.name.trim() === '') {
+  if (form.value.description.trim() === '') {
     alert('Name is required');
     return;
   }
@@ -37,15 +37,15 @@ const onSubmit = (action: 'create' | 'edit') => {
   if (action === 'create') {
     list.push({
       id: Date.now().toString(),
-      name: form.value.name,
+      description: form.value.description,
       category: form.value.category,
       state: 'pending',
     });
   } else {
-    list.find((item) => item.id === props.id).name = form.value.name;
+    list.find((item) => item.id === props.id).description = form.value.description;
     list.find((item) => item.id === props.id).category = form.value.category;
   }
-  form.value.name = '';
+  form.value.description = '';
   form.value.category = '';
 
   router.push('/list-pending');
@@ -56,15 +56,15 @@ const onSubmit = (action: 'create' | 'edit') => {
   <base-card class="col-start-5 col-span-4 row-start-2 row-span-10">
     <form class="flex flex-col gap-4" @submit.prevent="onSubmit(action)">
       <div class="flex flex-col">
-        <label for="todo-name"> Name </label>
+        <label for="todo-description">Description</label>
         <input
           class="border border-neutral-300 hover:border-neutral-500 rounded"
-          id="todo-name"
-          v-model="form.name"
+          id="todo-description"
+          v-model="form.description"
         />
       </div>
       <div class="flex flex-col">
-        <label for="todo-category"> Category </label>
+        <label for="todo-category">Category</label>
         <select
           class="border border-neutral-300 hover:border-neutral-500 rounded"
           id="todo-category"

@@ -18,7 +18,7 @@ describe('TodoListItem', () => {
       props: {
         description: 'Test Todo',
         state: 'done',
-        id: '123'
+        id: '123',
       },
       global: {
         plugins: [createPinia()]
@@ -34,7 +34,7 @@ describe('TodoListItem', () => {
       props: {
         description: 'Pending Todo',
         state: 'pending',
-        id: '456'
+        id: '456',
       },
       global: {
         plugins: [createPinia()]
@@ -49,13 +49,13 @@ describe('TodoListItem', () => {
     const user = userEvent.setup();
     const pinia = createPinia();
     const store = useTodoListStore(pinia);
-    store.list.push({ id: '123', name: 'Test Todo', category: 'Work', state: 'pending' });
+    store.list.push({ id: '123', description: 'Test Todo', category: 'Work', state: 'pending' });
 
     render(ListItem, {
       props: {
         description: 'Test Todo',
         state: 'pending',
-        id: '123'
+        id: '123',
       },
       global: {
         plugins: [pinia]
@@ -74,7 +74,7 @@ describe('TodoListItem', () => {
       props: {
         description: 'Test Todo',
         state: 'pending',
-        id: '123'
+        id: '123',
       },
       global: {
         plugins: [createPinia()]

@@ -9,7 +9,7 @@ const pendingList = computed(() => {
   return list.filter((item) => item.state === 'pending');
 });
 const hasItems = computed(() => {
-  return !!list.length;
+  return !!pendingList.value.length;
 });
 </script>
 
@@ -21,7 +21,7 @@ const hasItems = computed(() => {
       <list-item
         v-for="item in pendingList"
         :key="item.id"
-        :description="item.name"
+        :description="item.description"
         :state="item.state"
         :id="item.id"
       />

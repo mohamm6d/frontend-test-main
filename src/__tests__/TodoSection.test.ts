@@ -21,8 +21,8 @@ describe('TodoSection', () => {
     const pinia = createPinia();
     const store = useTodoListStore(pinia);
     store.list.push(
-      { id: '1', name: 'Pending Todo', category: 'Work', state: 'pending' },
-      { id: '2', name: 'Done Todo', category: 'Health', state: 'done' }
+      { id: '1', description: 'Pending Todo', category: 'Work', state: 'pending' },
+      { id: '2', description: 'Done Todo', category: 'Health', state: 'done' }
     );
 
     render(PageListPendingItems, {
@@ -37,8 +37,8 @@ describe('TodoSection', () => {
     const pinia = createPinia();
     const store = useTodoListStore(pinia);
     store.list.push(
-      { id: '1', name: 'Only Pending Item', category: 'Work', state: 'pending' },
-      { id: '2', name: 'Another Pending', category: 'Personal', state: 'pending' }
+      { id: '1', description: 'Only Pending Item', category: 'Work', state: 'pending' },
+      { id: '2', description: 'Another Pending', category: 'Personal', state: 'pending' }
     );
 
     render(PageListDoneItems, {
@@ -56,8 +56,8 @@ describe('TodoSection', () => {
     const pinia = createPinia();
     const store = useTodoListStore(pinia);
     store.list.push(
-      { id: '1', name: 'Only Done Item', category: 'Work', state: 'done' },
-      { id: '2', name: 'Another Done', category: 'Health', state: 'done' }
+      { id: '1', description: 'Only Done Item', category: 'Work', state: 'done' },
+      { id: '2', description: 'Another Done', category: 'Health', state: 'done' }
     );
 
     render(PageListPendingItems, {
@@ -75,10 +75,10 @@ describe('TodoSection', () => {
     const pinia = createPinia();
     const store = useTodoListStore(pinia);
     store.list.push(
-      { id: '1', name: 'Pending Task 1', category: 'Work', state: 'pending' },
-      { id: '2', name: 'Done Task 1', category: 'Health', state: 'done' },
-      { id: '3', name: 'Pending Task 2', category: 'Personal', state: 'pending' },
-      { id: '4', name: 'Done Task 2', category: 'Work', state: 'done' }
+          { id: '1', description: 'Pending Task 1', category: 'Work', state: 'pending' },
+      { id: '2', description: 'Done Task 1', category: 'Health', state: 'done' },
+      { id: '3', description: 'Pending Task 2', category: 'Personal', state: 'pending' },
+      { id: '4', description: 'Done Task 2', category: 'Work', state: 'done' }
     );
 
     const { unmount: unmountPending } = render(PageListPendingItems, {
